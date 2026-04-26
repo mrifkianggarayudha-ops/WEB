@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Cocokkan Hardware</title>
+
+<style>
+body {
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+  background: linear-gradient(-45deg, #e6f0ff, #fff5e6);
+  background-size: 400% 400%;
+  animation: gradientMove 8s ease infinite;
+  margin: 0;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 2.5em;
+}
+
+p {
+  color: #666;
+  font-size: 1.2em;
+  margin-bottom: 30px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 60px;
+  margin: 30px auto;
+  max-width: 800px;
+  flex-wrap: wrap;
+}
+
+/* Gambar */
+.images {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.images img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  margin: 0;
+  cursor: pointer;
+  border: 3px solid transparent;
+  border-radius: 15px;
+  background: white;
+  padding: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.images img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.images img.selected {
+  border-color: #2196f3;
+  box-shadow: 0 0 20px rgba(33, 150, 243, 0.4);
+}
+
+/* Nama */
+.names {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.name {
+  background: white;
+  padding: 15px 25px;
+  margin: 0;
+  cursor: pointer;
+  border-radius: 12px;
+  border: 2px solid #ddd;
+  font-weight: 500;
+  font-size: 1.1em;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  min-width: 150px;
+}
+
+.name:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  border-color: #bbb;
+}
+
+.name.correct {
+  background: linear-gradient(135deg, #4caf50, #45a049);
+  color: white;
+  border-color: #4caf50;
+  animation: correctPulse 0.6s ease;
+}
+
+.name.wrong {
+  background: linear-gradient(135deg, #f44336, #d32f2f);
+  color: white;
+  border-color: #f44336;
+  animation: wrongShake 0.6s ease;
+}
+
+@keyframes correctPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes wrongShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+#score {
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #333;
+  margin-top: 30px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .images img {
+    width: 100px;
+    height: 100px;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+}
+</style>
+
+</head>
+<body>
+
+<h1>🖥️ Cocokkan Hardware</h1>
+<p>Pilih gambar lalu pilih nama yang sesuai</p>
+
+<div class="container">
+
+  <!-- GAMBAR -->
+  <div class="images">
+    <img src="img/Keyboard.png" data-name="Keyboard">
+    <img src="img/Monitor.png" data-name="Monitor">
+    <img src="img/Mouse.png" data-name="Mouse">
+  </div>
+
+  <!-- NAMA -->
+  <div class="names">
+    <div class="name">Keyboard</div>
+    <div class="name">Monitor</div>
+    <div class="name">Mouse</div>
+  </div>
+
+</div>
+
+<h2 id="score">Skor: 0</h2>
+
+<script>
+let selectedImage = null;
+let score = 0;
+
+const images = document.querySelectorAll(".images img");
+const names = document.querySelectorAll(".name");
+const scoreText = document.getElementById("score");
+
+// pilih gambar
+images.forEach(img => {
+  img.addEventListener("click", () => {
+    images.forEach(i => i.classList.remove("selected"));
+    img.classList.add("selected");
+    selectedImage = img;
+  });
+});
+
+// pilih nama
+names.forEach(name => {
+  name.addEventListener("click", () => {
+
+    if (!selectedImage) {
+      alert("Pilih gambar dulu!");
+      return;
+    }
+
+    const correct = selectedImage.dataset.name;
+
+    if (name.textContent === correct) {
+      name.classList.add("correct");
+      score++;
+      scoreText.textContent = "Skor: " + score;
+
+      selectedImage.style.opacity = "0.5";
+      selectedImage.style.pointerEvents = "none";
+
+    } else {
+      name.classList.add("wrong");
+      setTimeout(() => {
+        name.classList.remove("wrong");
+      }, 800);
+    }
+
+    selectedImage.classList.remove("selected");
+    selectedImage = null;
+
+  });
+});
+</script>
+
+</body>
+</html>

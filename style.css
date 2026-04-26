@@ -1,0 +1,153 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+
+  /* GRADIENT GERAK (HALUS) */
+  background: linear-gradient(-45deg, #e6f0ff, #fff5e6, #d4fcff, #ffe0c3);
+  background-size: 400% 400%;
+  animation: gradientMove 12s ease infinite;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* ANIMASI */
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Container */
+.container {
+  text-align: center;
+  max-width: 600px;
+}
+
+/* Logo */
+.logo {
+  font-size: 70px;
+  margin-bottom: 10px;
+}
+
+/* Title */
+.title {
+  font-size: 60px;
+  font-weight: bold;
+  background: linear-gradient(to right, #00bcd4, #4caf50);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Subtitle */
+.subtitle {
+  color: #444;
+  font-size: 18px;
+  margin-bottom: 40px;
+}
+
+/* Menu */
+.menu {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+/* Card */
+.card {
+  width: 170px;
+  height: 140px;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(8px);
+  border-radius: 18px;
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+/* Hover */
+.card:hover {
+  transform: translateY(-8px) scale(1.05);
+}
+
+/* Active Card */
+.card.active {
+  border: 3px solid #4caf50;
+  box-shadow: 0 0 15px rgba(76, 175, 80, 0.6);
+}
+
+/* Buttons */
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Button */
+.btn {
+  padding: 14px 30px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+/* Primary */
+.primary {
+  background: linear-gradient(to right, #2196f3, #4caf50);
+  color: white;
+}
+
+.primary:hover {
+  transform: scale(1.05);
+}
+
+/* Secondary */
+.secondary {
+  background: rgba(255,255,255,0.7);
+}
+
+.secondary:hover {
+  background: #ddd;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal Content */
+.modal-content {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  text-align: center;
+  width: 320px;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Animasi modal */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}

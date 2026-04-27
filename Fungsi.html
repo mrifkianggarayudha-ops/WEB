@@ -6,14 +6,13 @@
 
 <style>
 body {
-  font-family: 'Segoe UI', sans-serif;
-  text-align: center;
-  background: linear-gradient(-45deg, #f0f8ff, #e6f0ff);
-  background-size: 400% 400%;
-  animation: gradientMove 8s ease infinite;
   margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(-45deg, #e6f0ff, #fff5e6, #d4fcff, #ffe0c3);
+  background-size: 400% 400%;
+  animation: gradientMove 12s ease infinite;
+  text-align: center;
   padding: 20px;
-  min-height: 100vh;
 }
 
 @keyframes gradientMove {
@@ -23,130 +22,110 @@ body {
 }
 
 h1 {
-  color: #333;
-  margin-bottom: 10px;
-  font-size: 2.5em;
+  font-size: 40px;
+  background: linear-gradient(to right, #00bcd4, #4caf50);
+  -webkit-background-clip: text;
+  color: transparent;
 }
 
 p {
-  color: #666;
-  font-size: 1.2em;
-  margin-bottom: 30px;
+  color: #444;
 }
 
+/* CONTAINER */
 .container {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  gap: 60px;
-  margin: 30px auto;
-  max-width: 900px;
-  flex-wrap: wrap;
+  gap: 80px;
+  margin-top: 30px;
+
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(10px);
+  padding: 30px;
+  border-radius: 20px;
+
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.container > div {
+/* KOLOM */
+.column {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  min-width: 200px;
+  gap: 20px;
 }
 
-/* Hardware */
-.hardware {
-  background: white;
-  padding: 15px 25px;
-  margin: 0;
-  border-radius: 12px;
+/* KOTAK */
+.box {
+  width: 200px;
+  height: 120px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(8px);
+
+  border-radius: 15px;
   cursor: pointer;
-  border: 2px solid #ddd;
-  font-weight: 500;
-  font-size: 1.1em;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  text-align: center;
-}
-
-.hardware:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-  border-color: #bbb;
-}
-
-.hardware.selected {
-  border-color: #2196f3;
-  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-  box-shadow: 0 0 20px rgba(33, 150, 243, 0.3);
-}
-
-/* Fungsi */
-.function {
-  background: white;
-  padding: 15px 25px;
-  margin: 0;
-  border-radius: 12px;
-  cursor: pointer;
-  border: 2px solid #ddd;
-  font-weight: 500;
-  font-size: 1.1em;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  text-align: center;
-}
-
-.function:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-  border-color: #bbb;
-}
-
-.function.correct {
-  background: linear-gradient(135deg, #4caf50, #45a049);
-  color: white;
-  border-color: #4caf50;
-  animation: correctPulse 0.6s ease;
-}
-
-.function.wrong {
-  background: linear-gradient(135deg, #f44336, #d32f2f);
-  color: white;
-  border-color: #f44336;
-  animation: wrongShake 0.6s ease;
-}
-
-@keyframes correctPulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-}
-
-@keyframes wrongShake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
-}
-
-#score {
-  font-size: 1.8em;
   font-weight: bold;
-  color: #333;
-  margin-top: 30px;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+  transition: 0.3s;
+  border: 2px solid transparent;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-    gap: 30px;
-  }
+.box:hover {
+  transform: translateY(-5px) scale(1.05);
+}
 
-  .container > div {
-    min-width: auto;
-  }
+/* PILIH */
+.box.selected {
+  border: 3px solid #4caf50;
+  box-shadow: 0 0 15px rgba(76,175,80,0.5);
+}
 
-  h1 {
-    font-size: 2em;
-  }
+/* BENAR */
+.box.correct {
+  background: linear-gradient(to right, #4caf50, #66bb6a);
+  color: white;
+}
+
+/* SALAH */
+.box.wrong {
+  background: linear-gradient(to right, #f44336, #e57373);
+  color: white;
+}
+
+/* SKOR */
+#score {
+  margin-top: 20px;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+/* BUTTON */
+.buttons {
+  margin-top: 25px;
+}
+
+button {
+  padding: 12px 25px;
+  margin: 5px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+
+  background: linear-gradient(to right, #2196f3, #4caf50);
+  color: white;
+
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
 }
 </style>
 
@@ -157,80 +136,108 @@ p {
 <p>Pilih hardware lalu pilih fungsi yang sesuai</p>
 
 <div class="container">
-
-  <!-- HARDWARE -->
-  <div>
-    <div class="hardware" data-name="Keyboard">Keyboard</div>
-    <div class="hardware" data-name="Monitor">Monitor</div>
-    <div class="hardware" data-name="Mouse">Mouse</div>
-  </div>
-
-  <!-- FUNGSI -->
-  <div>
-    <div class="function">Alat input teks</div>
-    <div class="function">Menampilkan output</div>
-    <div class="function">Alat penunjuk</div>
-  </div>
-
+  <div class="column" id="hardwareList"></div>
+  <div class="column" id="functionList"></div>
 </div>
 
 <h2 id="score">Skor: 0</h2>
 
+<div class="buttons">
+  <button onclick="resetGame()">🔄 Main Lagi</button>
+  <button onclick="goHome()">🏠 Kembali</button>
+</div>
+
 <script>
-let selectedHardware = null;
+const data = [
+  { name: "Keyboard", func: "Alat input teks" },
+  { name: "Monitor", func: "Menampilkan output" },
+  { name: "Mouse", func: "Alat penunjuk" }
+];
+
+let selected = null;
 let score = 0;
 
-const hardwares = document.querySelectorAll(".hardware");
-const functions = document.querySelectorAll(".function");
+const hardwareList = document.getElementById("hardwareList");
+const functionList = document.getElementById("functionList");
 const scoreText = document.getElementById("score");
 
-// mapping jawaban benar
-const answers = {
-  "Keyboard": "Alat input teks",
-  "Monitor": "Menampilkan output",
-  "Mouse": "Alat penunjuk"
-};
+/* ACAK */
+function shuffle(arr) {
+  return arr.sort(() => Math.random() - 0.5);
+}
 
-// pilih hardware
-hardwares.forEach(hw => {
-  hw.addEventListener("click", () => {
-    hardwares.forEach(h => h.classList.remove("selected"));
-    hw.classList.add("selected");
-    selectedHardware = hw;
+/* LOAD GAME */
+function loadGame() {
+  hardwareList.innerHTML = "";
+  functionList.innerHTML = "";
+  selected = null;
+
+  let hwShuffle = shuffle([...data]);
+  let fnShuffle = shuffle([...data]);
+
+  hwShuffle.forEach(item => {
+    let div = document.createElement("div");
+    div.className = "box";
+    div.textContent = item.name;
+    div.dataset.name = item.name;
+
+    div.onclick = () => {
+      document.querySelectorAll("#hardwareList .box")
+        .forEach(b => b.classList.remove("selected"));
+      div.classList.add("selected");
+      selected = div;
+    };
+
+    hardwareList.appendChild(div);
   });
-});
 
-// pilih fungsi
-functions.forEach(fn => {
-  fn.addEventListener("click", () => {
+  fnShuffle.forEach(item => {
+    let div = document.createElement("div");
+    div.className = "box";
+    div.textContent = item.func;
 
-    if (!selectedHardware) {
-      alert("Pilih hardware dulu!");
-      return;
-    }
+    div.onclick = () => {
+      if (!selected) {
+        alert("Pilih hardware dulu!");
+        return;
+      }
 
-    const correct = answers[selectedHardware.dataset.name];
+      const correct = data.find(d => d.name === selected.dataset.name).func;
 
-    if (fn.textContent === correct) {
-      fn.classList.add("correct");
-      score++;
-      scoreText.textContent = "Skor: " + score;
+      if (div.textContent === correct) {
+        div.classList.add("correct");
+        selected.style.opacity = "0.3";
+        selected.style.pointerEvents = "none";
 
-      selectedHardware.style.opacity = "0.5";
-      selectedHardware.style.pointerEvents = "none";
+        score++;
+        scoreText.textContent = "Skor: " + score;
+      } else {
+        div.classList.add("wrong");
+        setTimeout(() => div.classList.remove("wrong"), 500);
+      }
 
-    } else {
-      fn.classList.add("wrong");
-      setTimeout(() => {
-        fn.classList.remove("wrong");
-      }, 800);
-    }
+      selected.classList.remove("selected");
+      selected = null;
+    };
 
-    selectedHardware.classList.remove("selected");
-    selectedHardware = null;
-
+    functionList.appendChild(div);
   });
-});
+}
+
+/* RESET */
+function resetGame() {
+  score = 0;
+  scoreText.textContent = "Skor: 0";
+  loadGame();
+}
+
+/* KEMBALI */
+function goHome() {
+  window.location.href = "index.html";
+}
+
+/* START */
+loadGame();
 </script>
 
 </body>

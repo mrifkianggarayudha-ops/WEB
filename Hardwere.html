@@ -8,14 +8,11 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-
   background: linear-gradient(-45deg, #e6f0ff, #fff5e6, #d4fcff, #ffe0c3);
   background-size: 400% 400%;
   animation: gradientMove 12s ease infinite;
-
   text-align: center;
   padding: 20px;
-  min-height: 100vh;
 }
 
 @keyframes gradientMove {
@@ -24,218 +21,200 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* TITLE */
 h1 {
   font-size: 40px;
-  font-weight: bold;
   background: linear-gradient(to right, #00bcd4, #4caf50);
   -webkit-background-clip: text;
   color: transparent;
 }
 
-p {
-  color: #444;
-}
-
 /* CONTAINER */
 .container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
+  justify-content: center;
+  gap: 80px;
+  margin-top: 30px;
 
   background: rgba(255,255,255,0.6);
   backdrop-filter: blur(10px);
   padding: 30px;
   border-radius: 20px;
-
-  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-  max-width: 500px;
-  margin: auto;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* SATU BARIS */
-.pair {
+/* KOLOM */
+.column {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 20px;
 }
 
 /* GAMBAR */
-.pair img {
+img {
   width: 120px;
   height: 120px;
   object-fit: contain;
-
   background: rgba(255,255,255,0.7);
-  border-radius: 15px;
   padding: 10px;
+  border-radius: 15px;
   cursor: pointer;
-
   border: 2px solid transparent;
-  transition: 0.3s;
 }
 
-.pair img:hover {
-  transform: scale(1.05);
-}
-
-.pair img.selected {
+img.selected {
   border: 3px solid #4caf50;
-  box-shadow: 0 0 10px rgba(76, 175, 80, 0.6);
 }
 
 /* NAMA */
 .name {
-  width: 200px;
+  width: 150px;
   height: 120px;
-
   display: flex;
-  justify-content: center;
   align-items: center;
-
+  justify-content: center;
   background: rgba(255,255,255,0.7);
   border-radius: 15px;
   cursor: pointer;
   font-weight: bold;
-
-  transition: 0.3s;
 }
 
-.name:hover {
-  transform: scale(1.05);
-}
-
-/* BENAR */
 .name.correct {
-  background: linear-gradient(to right, #4caf50, #66bb6a);
+  background: #4caf50;
   color: white;
 }
 
-/* SALAH */
 .name.wrong {
-  background: linear-gradient(to right, #f44336, #e57373);
+  background: #f44336;
   color: white;
-}
-
-/* SKOR */
-#score {
-  margin-top: 20px;
-  font-size: 1.5em;
-  font-weight: bold;
 }
 
 /* BUTTON */
+.buttons {
+  margin-top: 30px;
+}
+
 button {
-  margin-top: 20px;
-  padding: 14px 30px;
-  border-radius: 12px;
+  padding: 12px 25px;
+  margin: 5px;
   border: none;
+  border-radius: 10px;
   cursor: pointer;
   font-weight: bold;
-
   background: linear-gradient(to right, #2196f3, #4caf50);
   color: white;
-
-  transition: 0.3s;
 }
 
 button:hover {
   transform: scale(1.05);
 }
 </style>
-
 </head>
+
 <body>
 
 <h1>🖥️ Cocokkan Hardware</h1>
 <p>Pilih gambar lalu pilih nama yang sesuai</p>
 
 <div class="container">
-
-  <div class="pair">
-    <img src="Keyboard.png" data-name="Keyboard">
-    <div class="name">Keyboard</div>
-  </div>
-
-  <div class="pair">
-    <img src="Monitor.png" data-name="Monitor">
-    <div class="name">Monitor</div>
-  </div>
-
-  <div class="pair">
-    <img src="Mouse.png" data-name="Mouse">
-    <div class="name">Mouse</div>
-  </div>
-
+  <div class="column" id="images"></div>
+  <div class="column" id="names"></div>
 </div>
 
 <h2 id="score">Skor: 0</h2>
-<button onclick="resetGame()">Main Lagi 🔄</button>
+
+<div class="buttons">
+  <button onclick="resetGame()">🔄 Main Lagi</button>
+  <button onclick="goHome()">🏠 Kembali</button>
+</div>
 
 <script>
+const data = [
+  {name: "Keyboard", img: "Keyboard.png"},
+  {name: "Monitor", img: "Monitor.png"},
+  {name: "Mouse", img: "Mouse.png"}
+];
+
 let selectedImage = null;
 let score = 0;
 
-const images = document.querySelectorAll(".pair img");
-const names = document.querySelectorAll(".name");
+const imgContainer = document.getElementById("images");
+const nameContainer = document.getElementById("names");
 const scoreText = document.getElementById("score");
 
-/* PILIH GAMBAR */
-images.forEach(img => {
-  img.addEventListener("click", () => {
-    images.forEach(i => i.classList.remove("selected"));
-    img.classList.add("selected");
-    selectedImage = img;
+/* ACAK */
+function shuffle(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
+
+/* LOAD GAME */
+function loadGame() {
+  imgContainer.innerHTML = "";
+  nameContainer.innerHTML = "";
+  selectedImage = null;
+
+  let shuffledImages = shuffle([...data]);
+  let shuffledNames = shuffle([...data]);
+
+  shuffledImages.forEach(item => {
+    let img = document.createElement("img");
+    img.src = item.img;
+    img.dataset.name = item.name;
+
+    img.onclick = () => {
+      document.querySelectorAll("img").forEach(i => i.classList.remove("selected"));
+      img.classList.add("selected");
+      selectedImage = img;
+    };
+
+    imgContainer.appendChild(img);
   });
-});
 
-/* PILIH NAMA */
-names.forEach(name => {
-  name.addEventListener("click", () => {
+  shuffledNames.forEach(item => {
+    let div = document.createElement("div");
+    div.className = "name";
+    div.textContent = item.name;
 
-    if (!selectedImage) {
-      alert("Pilih gambar dulu!");
-      return;
-    }
+    div.onclick = () => {
+      if (!selectedImage) {
+        alert("Pilih gambar dulu!");
+        return;
+      }
 
-    const correct = selectedImage.dataset.name;
+      if (selectedImage.dataset.name === div.textContent) {
+        div.classList.add("correct");
+        selectedImage.style.opacity = "0.3";
+        selectedImage.style.pointerEvents = "none";
+        score++;
+        scoreText.textContent = "Skor: " + score;
+      } else {
+        div.classList.add("wrong");
+        setTimeout(() => div.classList.remove("wrong"), 500);
+      }
 
-    if (name.textContent === correct) {
-      name.classList.add("correct");
-      score++;
-      scoreText.textContent = "Skor: " + score;
+      selectedImage.classList.remove("selected");
+      selectedImage = null;
+    };
 
-      selectedImage.style.opacity = "0.3";
-      selectedImage.style.pointerEvents = "none";
-
-    } else {
-      name.classList.add("wrong");
-      setTimeout(() => name.classList.remove("wrong"), 500);
-    }
-
-    selectedImage.classList.remove("selected");
-    selectedImage = null;
+    nameContainer.appendChild(div);
   });
-});
+}
 
 /* RESET */
 function resetGame() {
   score = 0;
   scoreText.textContent = "Skor: 0";
-
-  images.forEach(img => {
-    img.style.opacity = "1";
-    img.style.pointerEvents = "auto";
-    img.classList.remove("selected");
-  });
-
-  names.forEach(n => {
-    n.classList.remove("correct", "wrong");
-  });
-
-  selectedImage = null;
+  loadGame();
 }
+
+/* KEMBALI */
+function goHome() {
+  window.location.href = "index.html";
+}
+
+/* START */
+loadGame();
 </script>
 
 </body>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tambah Hardware</title>
+
+<style>
+
+body{
+  margin:0;
+  font-family:Segoe UI;
+  background:#f4f7fb;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+.form-box{
+  background:white;
+  padding:30px;
+  border-radius:20px;
+  width:350px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+h1{
+  color:#2196f3;
+  margin-bottom:20px;
+}
+
+label{
+  display:block;
+  margin-top:10px;
+  font-weight:bold;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  margin-top:5px;
+  border-radius:10px;
+  border:1px solid #ccc;
+  box-sizing:border-box;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  margin-top:15px;
+  border:none;
+  border-radius:10px;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.save{
+  background:#4caf50;
+}
+
+.back{
+  background:#555;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="form-box">
+
+<h1>Tambah Hardware</h1>
+
+<label>Nama Hardware</label>
+
+<input
+type="text"
+id="name"
+placeholder="Contoh: Keyboard">
+
+<label>Nama File Gambar</label>
+
+<input
+type="text"
+id="img"
+placeholder="Contoh: Keyboard.png">
+
+<button
+class="save"
+onclick="saveHardware()">
+
+Simpan
+
+</button>
+
+<button
+class="back"
+onclick="goBack()">
+
+Kembali
+
+</button>
+
+</div>
+
+<script>
+
+function saveHardware(){
+
+  let hardwareData =
+  JSON.parse(
+    localStorage.getItem("hardwareData")
+  ) || [];
+
+  const name =
+  document.getElementById("name").value;
+
+  const img =
+  document.getElementById("img").value;
+
+  if(name === "" || img === ""){
+
+    alert("Isi semua data!");
+
+    return;
+
+  }
+
+  hardwareData.push({
+    name,
+    img
+  });
+
+  localStorage.setItem(
+    "hardwareData",
+    JSON.stringify(hardwareData)
+  );
+
+  alert("Data berhasil ditambahkan!");
+
+  window.location.href =
+  "admin.html";
+
+}
+
+function goBack(){
+
+  window.location.href =
+  "admin.html";
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edit Hardware</title>
+
+<style>
+
+body{
+  margin:0;
+  font-family:Segoe UI;
+  background:#f4f7fb;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+.form-box{
+  background:white;
+  padding:30px;
+  border-radius:20px;
+  width:350px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+h1{
+  color:#2196f3;
+  margin-bottom:20px;
+}
+
+label{
+  display:block;
+  margin-top:10px;
+  font-weight:bold;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  margin-top:5px;
+  border-radius:10px;
+  border:1px solid #ccc;
+  box-sizing:border-box;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  margin-top:15px;
+  border:none;
+  border-radius:10px;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.update{
+  background:#2196f3;
+}
+
+.back{
+  background:#555;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="form-box">
+
+<h1>Edit Hardware</h1>
+
+<label>Nama Hardware</label>
+
+<input
+type="text"
+id="name">
+
+<label>Nama File Gambar</label>
+
+<input
+type="text"
+id="img">
+
+<button
+class="update"
+onclick="updateHardware()">
+
+Update
+
+</button>
+
+<button
+class="back"
+onclick="goBack()">
+
+Kembali
+
+</button>
+
+</div>
+
+<script>
+
+let hardwareData =
+JSON.parse(
+  localStorage.getItem("hardwareData")
+);
+
+let editIndex =
+localStorage.getItem("editIndex");
+
+document.getElementById("name").value =
+hardwareData[editIndex].name;
+
+document.getElementById("img").value =
+hardwareData[editIndex].img;
+
+function updateHardware(){
+
+  hardwareData[editIndex] = {
+
+    name:
+    document.getElementById("name").value,
+
+    img:
+    document.getElementById("img").value
+
+  };
+
+  localStorage.setItem(
+    "hardwareData",
+    JSON.stringify(hardwareData)
+  );
+
+  alert("Data berhasil diupdate!");
+
+  window.location.href =
+  "admin.html";
+
+}
+
+function goBack(){
+
+  window.location.href =
+  "admin.html";
+
+}
+
+</script>
+
+</body>
+</html>

@@ -2,247 +2,286 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Cocokkan Hardware</title>
+<title>Hardware Game</title>
 
 <style>
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(-45deg, #e6f0ff, #fff5e6, #d4fcff, #ffe0c3);
-  background-size: 400% 400%;
-  animation: gradientMove 12s ease infinite;
-  text-align: center;
-  padding: 20px;
+
+body{
+  font-family:Segoe UI;
+  text-align:center;
+  background:#f4f7fb;
+  padding:20px;
 }
 
-@keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+h1{
+  color:#2196f3;
 }
 
-h1 {
-  font-size: 40px;
-  background: linear-gradient(to right, #00bcd4, #4caf50);
-  -webkit-background-clip: text;
-  color: transparent;
+.container{
+  display:flex;
+  justify-content:center;
+  gap:80px;
+  margin-top:30px;
 }
 
-/* CONTAINER */
-.container {
-  display: flex;
-  justify-content: center;
-  gap: 80px;
-  margin-top: 30px;
-
-  background: rgba(255,255,255,0.6);
-  backdrop-filter: blur(10px);
-  padding: 30px;
-  border-radius: 20px;
-  width: fit-content;
-  margin-left: auto;
-  margin-right: auto;
+.column{
+  display:flex;
+  flex-direction:column;
+  gap:20px;
 }
 
-/* KOLOM */
-.column {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+img{
+  width:120px;
+  height:120px;
+  object-fit:contain;
+  background:white;
+  padding:10px;
+  border-radius:15px;
+  cursor:pointer;
+  border:2px solid transparent;
 }
 
-/* GAMBAR */
-img {
-  width: 120px;
-  height: 120px;
-  object-fit: contain;
-  background: rgba(255,255,255,0.7);
-  padding: 10px;
-  border-radius: 15px;
-  cursor: pointer;
-  border: 2px solid transparent;
+img.selected{
+  border:3px solid #4caf50;
 }
 
-img.selected {
-  border: 3px solid #4caf50;
+.name{
+  width:150px;
+  height:120px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:white;
+  border-radius:15px;
+  cursor:pointer;
+  font-weight:bold;
 }
 
-/* NAMA */
-.name {
-  width: 150px;
-  height: 120px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255,255,255,0.7);
-  border-radius: 15px;
-  cursor: pointer;
-  font-weight: bold;
+.correct{
+  background:#4caf50;
+  color:white;
 }
 
-.name.correct {
-  background: #4caf50;
-  color: white;
+.wrong{
+  background:#f44336;
+  color:white;
 }
 
-.name.wrong {
-  background: #f44336;
-  color: white;
+button{
+  padding:12px 20px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  color:white;
+  font-weight:bold;
+  margin:5px;
 }
 
-/* BUTTON */
-.buttons {
-  margin-top: 30px;
+.play{
+  background:#4caf50;
 }
 
-button {
-  padding: 12px 25px;
-  margin: 5px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: bold;
-  background: linear-gradient(to right, #2196f3, #4caf50);
-  color: white;
+.back{
+  background:#555;
 }
 
-button:hover {
-  transform: scale(1.05);
+.admin{
+  background:#ff9800;
 }
+
 </style>
 </head>
 
 <body>
 
 <h1>Mencocokkan Hardware</h1>
+
 <p>Pilih gambar lalu pilih nama yang sesuai</p>
 
 <div class="container">
+
   <div class="column" id="images"></div>
+
   <div class="column" id="names"></div>
+
 </div>
 
 <h2 id="score">Skor: 0</h2>
 
-<div class="buttons">
-  <button onclick="resetGame()">Main Lagi</button>
-  <button onclick="goHome()">Kembali</button>
-  <button onclick="openAdmin()">Admin</button>
+<div>
+
+<button class="play" onclick="resetGame()">
+Main Lagi
+</button>
+
+<button class="back" onclick="goHome()">
+Kembali
+</button>
+
+<button class="admin" onclick="openAdmin()">
+Admin
+</button>
+
 </div>
 
 <script>
-let data = JSON.parse(localStorage.getItem("hardwareData")) || [
-  {name: "Keyboard", img: "Keyboard.png"},
-  {name: "Monitor", img: "Monitor.png"},
-  {name: "Mouse", img: "Mouse.png"}
+
+let data =
+JSON.parse(localStorage.getItem("hardwareData")) || [
+
+  {name:"Keyboard", img:"Keyboard.png"},
+  {name:"Monitor", img:"Monitor.png"},
+  {name:"Mouse", img:"Mouse.png"}
+
 ];
 
 let selectedImage = null;
 let score = 0;
 
-const imgContainer = document.getElementById("images");
-const nameContainer = document.getElementById("names");
-const scoreText = document.getElementById("score");
+const imgContainer =
+document.getElementById("images");
 
-/* ACAK */
-function shuffle(array) {
-  return array.sort(() => Math.random() - 0.5);
+const nameContainer =
+document.getElementById("names");
+
+const scoreText =
+document.getElementById("score");
+
+function shuffle(array){
+
+  return array.sort(() =>
+    Math.random() - 0.5
+  );
+
 }
 
-/* LOAD GAME */
-function loadGame() {
+function loadGame(){
+
   imgContainer.innerHTML = "";
   nameContainer.innerHTML = "";
-  selectedImage = null;
 
-  let shuffledImages = shuffle([...data]);
-  let shuffledNames = shuffle([...data]);
+  let shuffledImages =
+  shuffle([...data]);
+
+  let shuffledNames =
+  shuffle([...data]);
 
   shuffledImages.forEach(item => {
-    let img = document.createElement("img");
+
+    let img =
+    document.createElement("img");
 
     img.src = item.img;
+
     img.dataset.name = item.name;
 
     img.onclick = () => {
+
       document.querySelectorAll("img")
-      .forEach(i => i.classList.remove("selected"));
+      .forEach(i => {
+        i.classList.remove("selected");
+      });
 
       img.classList.add("selected");
 
       selectedImage = img;
+
     };
 
     imgContainer.appendChild(img);
+
   });
 
   shuffledNames.forEach(item => {
-    let div = document.createElement("div");
+
+    let div =
+    document.createElement("div");
 
     div.className = "name";
+
     div.textContent = item.name;
 
     div.onclick = () => {
-      if (!selectedImage) {
+
+      if(!selectedImage){
+
         alert("Pilih gambar dulu!");
+
         return;
       }
 
-      if (selectedImage.dataset.name === div.textContent) {
+      if(selectedImage.dataset.name === div.textContent){
 
         div.classList.add("correct");
 
         selectedImage.style.opacity = "0.3";
+
         selectedImage.style.pointerEvents = "none";
 
         score++;
 
-        scoreText.textContent = "Skor: " + score;
+        scoreText.textContent =
+        "Skor: " + score;
 
       } else {
 
         div.classList.add("wrong");
 
         setTimeout(() => {
+
           div.classList.remove("wrong");
-        }, 500);
+
+        },500);
+
       }
 
       selectedImage.classList.remove("selected");
+
       selectedImage = null;
+
     };
 
     nameContainer.appendChild(div);
+
   });
+
 }
 
-/* RESET */
-function resetGame() {
+function resetGame(){
+
   score = 0;
 
   scoreText.textContent = "Skor: 0";
 
   loadGame();
+
 }
 
-/* HOME */
-function goHome() {
+function goHome(){
+
   window.location.href = "index.html";
+
 }
 
-/* ADMIN */
-function openAdmin() {
-  const password = prompt("Masukkan Password Admin");
+function openAdmin(){
 
-  if (password === "123") {
+  const password =
+  prompt("Masukkan Password");
+
+  if(password === "123"){
+
     window.location.href = "admin.html";
+
   } else {
+
     alert("Password salah!");
+
   }
+
 }
 
-/* START */
 loadGame();
+
 </script>
 
 </body>

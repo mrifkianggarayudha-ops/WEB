@@ -2,9 +2,12 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TechMatch</title>
+
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <div class="container">
@@ -14,12 +17,15 @@
 
   <!-- Judul -->
   <h1 class="title">TechMatch</h1>
+
   <p class="subtitle">
-    Asah pengetahuanmu tentang perangkat komputer dengan cara yang menyenangkan!
+    Asah pengetahuanmu tentang perangkat komputer
+    dengan cara yang menyenangkan!
   </p>
 
-  <!-- Pilihan Game -->
+  <!-- PILIH GAME -->
   <div class="menu">
+
     <div class="card active" data-game="hardware">
       🖥️
       <span>Hardware</span>
@@ -27,18 +33,36 @@
 
     <div class="card" data-game="fungsi">
       ⚙️
-      <span>Fungsi</span>
+      <span>Fungsi Hardware</span>
     </div>
+
   </div>
 
-  <!-- Tombol -->
+  <!-- BUTTON -->
   <div class="buttons">
-    <button class="btn primary">Mulai Game</button>
-    <button class="btn secondary">Petunjuk</button>
+
+    <button class="btn primary">
+      Mulai Game
+    </button>
+
+    <button class="btn secondary">
+      Petunjuk
+    </button>
+
+    <button class="btn admin" onclick="loginAdmin()">
+      Admin
+    </button>
+
   </div>
+
+  <!-- FOOTER -->
+  <p class="footer">
+    TechMatch © 2026
+  </p>
 
 </div>
 
 <script src="script.js"></script>
+
 </body>
 </html>

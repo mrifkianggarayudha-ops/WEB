@@ -2,9 +2,11 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Hardware</title>
 
 <style>
+
 body{
   margin:0;
   font-family:Segoe UI;
@@ -12,23 +14,20 @@ body{
   padding:30px;
 }
 
-h1{
-  color:#2196f3;
-}
-
 .container{
   background:white;
-  padding:25px;
-  border-radius:15px;
+  padding:30px;
+  border-radius:20px;
   box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
 
-input{
-  padding:12px;
-  margin:5px;
-  width:220px;
-  border:1px solid #ccc;
-  border-radius:10px;
+h1{
+  color:#2196f3;
+  margin-bottom:20px;
+}
+
+.top-button{
+  margin-bottom:20px;
 }
 
 button{
@@ -60,7 +59,6 @@ button{
 table{
   width:100%;
   border-collapse:collapse;
-  margin-top:25px;
 }
 
 th,td{
@@ -69,9 +67,17 @@ th,td{
   text-align:center;
 }
 
+th{
+  background:#2196f3;
+  color:white;
+}
+
 img{
   width:70px;
+  height:70px;
+  object-fit:contain;
 }
+
 </style>
 </head>
 
@@ -81,28 +87,31 @@ img{
 
 <h1>Kelola Hardware</h1>
 
-<input type="text" id="name" placeholder="Nama Hardware">
-<input type="text" id="img" placeholder="Nama File Gambar">
+<div class="top-button">
 
-<button class="add" onclick="addHardware()">
-Tambah
+<button class="add" onclick="goAdd()">
++ Tambah Hardware
 </button>
+
+</div>
 
 <table>
 
 <thead>
+
 <tr>
 <th>Gambar</th>
-<th>Nama</th>
+<th>Nama Hardware</th>
 <th>Aksi</th>
 </tr>
+
 </thead>
 
 <tbody id="tableData"></tbody>
 
 </table>
 
-<button class="back" onclick="goGame()">
+<button class="back" onclick="goBack()">
 Kembali ke Game
 </button>
 
@@ -113,133 +122,119 @@ Kembali ke Game
 let hardwareData =
 JSON.parse(localStorage.getItem("hardwareData")) || [
 
-  {name:"Keyboard", img:"Keyboard.png"},
-  {name:"Monitor", img:"Monitor.png"},
-  {name:"Mouse", img:"Mouse.png"}
+  {
+    name:"Keyboard",
+    img:"Keyboard.png"
+  },
+
+  {
+    name:"Monitor",
+    img:"Monitor.png"
+  },
+
+  {
+    name:"Mouse",
+    img:"Mouse.png"
+  }
 
 ];
 
-function saveData() {
+function saveData(){
+
   localStorage.setItem(
     "hardwareData",
     JSON.stringify(hardwareData)
   );
+
 }
 
-function renderTable() {
+function renderTable(){
 
   const table =
   document.getElementById("tableData");
 
   table.innerHTML = "";
 
-  hardwareData.forEach((item,index) => {
+  hardwareData.forEach((item,index)=>{
 
     table.innerHTML += `
-      <tr>
+    
+    <tr>
 
-        <td>
-          <img src="${item.img}">
-        </td>
+      <td>
+        <img src="${item.img}">
+      </td>
 
-        <td>
-          ${item.name}
-        </td>
+      <td>
+        ${item.name}
+      </td>
 
-        <td>
+      <td>
 
-          <button
-          class="edit"
-          onclick="editData(${index})">
+        <button
+        class="edit"
+        onclick="goEdit(${index})">
 
-          Edit
+        Edit
 
-          </button>
+        </button>
 
-          <button
-          class="delete"
-          onclick="deleteData(${index})">
+        <button
+        class="delete"
+        onclick="deleteData(${index})">
 
-          Hapus
+        Hapus
 
-          </button>
+        </button>
 
-        </td>
+      </td>
 
-      </tr>
+    </tr>
+
     `;
-  });
-}
 
-function addHardware() {
-
-  const name =
-  document.getElementById("name").value;
-
-  const img =
-  document.getElementById("img").value;
-
-  if(name === "" || img === "") {
-
-    alert("Isi semua data!");
-
-    return;
-  }
-
-  hardwareData.push({
-    name,
-    img
   });
 
-  saveData();
-
-  renderTable();
-
-  document.getElementById("name").value = "";
-  document.getElementById("img").value = "";
 }
 
-function deleteData(index) {
+function goAdd(){
 
-  if(confirm("Hapus data ini?")) {
+  window.location.href =
+  "add.html";
+
+}
+
+function goEdit(index){
+
+  localStorage.setItem(
+    "editIndex",
+    index
+  );
+
+  window.location.href =
+  "edit.html";
+
+}
+
+function deleteData(index){
+
+  if(confirm("Hapus data ini?")){
 
     hardwareData.splice(index,1);
 
     saveData();
 
     renderTable();
+
   }
+
 }
 
-function editData(index) {
+function goBack(){
 
-  const newName =
-  prompt(
-    "Edit Nama",
-    hardwareData[index].name
-  );
+  window.location.href =
+  "Hardware.html";
 
-  const newImg =
-  prompt(
-    "Edit Gambar",
-    hardwareData[index].img
-  );
-
-  if(newName && newImg){
-
-    hardwareData[index] = {
-      name:newName,
-      img:newImg
-    };
-
-    saveData();
-
-    renderTable();
-  }
-}
-
-function goGame() {
-  window.location.href = "Hardware.html";
 }
 
 renderTable();

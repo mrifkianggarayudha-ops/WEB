@@ -130,7 +130,7 @@ button:hover {
 </div>
 
 <script>
-const data = [
+let data = JSON.parse(localStorage.getItem("hardwareData")) || [
   {name: "Keyboard", img: "Keyboard.png"},
   {name: "Monitor", img: "Monitor.png"},
   {name: "Mouse", img: "Mouse.png"}
@@ -159,12 +159,16 @@ function loadGame() {
 
   shuffledImages.forEach(item => {
     let img = document.createElement("img");
+
     img.src = item.img;
     img.dataset.name = item.name;
 
     img.onclick = () => {
-      document.querySelectorAll("img").forEach(i => i.classList.remove("selected"));
+      document.querySelectorAll("img")
+      .forEach(i => i.classList.remove("selected"));
+
       img.classList.add("selected");
+
       selectedImage = img;
     };
 
@@ -173,6 +177,7 @@ function loadGame() {
 
   shuffledNames.forEach(item => {
     let div = document.createElement("div");
+
     div.className = "name";
     div.textContent = item.name;
 
@@ -183,14 +188,23 @@ function loadGame() {
       }
 
       if (selectedImage.dataset.name === div.textContent) {
+
         div.classList.add("correct");
+
         selectedImage.style.opacity = "0.3";
         selectedImage.style.pointerEvents = "none";
+
         score++;
+
         scoreText.textContent = "Skor: " + score;
+
       } else {
+
         div.classList.add("wrong");
-        setTimeout(() => div.classList.remove("wrong"), 500);
+
+        setTimeout(() => {
+          div.classList.remove("wrong");
+        }, 500);
       }
 
       selectedImage.classList.remove("selected");
@@ -204,13 +218,26 @@ function loadGame() {
 /* RESET */
 function resetGame() {
   score = 0;
+
   scoreText.textContent = "Skor: 0";
+
   loadGame();
 }
 
-/* KEMBALI */
+/* HOME */
 function goHome() {
   window.location.href = "index.html";
+}
+
+/* ADMIN */
+function openAdmin() {
+  const password = prompt("Masukkan Password Admin");
+
+  if (password === "123") {
+    window.location.href = "admin.html";
+  } else {
+    alert("Password salah!");
+  }
 }
 
 /* START */

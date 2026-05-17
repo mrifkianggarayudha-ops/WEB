@@ -4,11 +4,6 @@ const cards = document.querySelectorAll(".card");
 const startBtn = document.querySelector(".primary");
 const guideBtn = document.querySelector(".secondary");
 
-// Validasi DOM elements
-if (!startBtn || !guideBtn || cards.length === 0) {
-  console.error("Error: Required DOM elements not found");
-}
-
 // === PILIH GAME ===
 cards.forEach(card => {
   card.addEventListener("click", () => {
@@ -23,7 +18,7 @@ cards.forEach(card => {
 if (startBtn) {
   startBtn.addEventListener("click", () => {
     if (selectedGame === "hardware") {
-      window.location.href = "Hardwere.html";
+      window.location.href = "Hardware.html";
     } else {
       window.location.href = "Fungsi.html";
     }
@@ -38,28 +33,33 @@ if (guideBtn) {
 }
 
 function showGuide() {
-  // Close existing modal jika ada
   const existingModal = document.querySelector(".modal");
+
   if (existingModal) {
     existingModal.remove();
   }
 
   const modal = document.createElement("div");
+
   modal.classList.add("modal");
 
   modal.innerHTML = `
     <div class="modal-content">
-      <h2>Petunjuk</h2>
+      <h2>Petunjuk Game</h2>
+
       <p>
-        Pilih jenis game terlebih dahulu.<br><br>
-        Cocokkan jawaban dengan benar.<br><br>
-        Jawaban benar = skor bertambah!
+        1. Pilih jenis game terlebih dahulu.<br><br>
+        2. Klik gambar hardware.<br><br>
+        3. Cocokkan dengan nama yang benar.<br><br>
+        4. Jawaban benar akan menambah skor.
       </p>
-      <button onclick="this.parentElement.parentElement.remove()">Tutup</button>
+
+      <button onclick="this.parentElement.parentElement.remove()">
+        Tutup
+      </button>
     </div>
   `;
 
-  // Close modal when clicking outside
   modal.addEventListener("click", (e) => {
     if (e.target === modal) {
       modal.remove();
@@ -67,4 +67,16 @@ function showGuide() {
   });
 
   document.body.appendChild(modal);
+}
+
+// === LOGIN ADMIN ===
+function loginAdmin() {
+  const username = prompt("Masukkan Username");
+  const password = prompt("Masukkan Password");
+
+  if (username === "admin" && password === "123") {
+    window.location.href = "admin.html";
+  } else {
+    alert("Username atau Password salah!");
+  }
 }

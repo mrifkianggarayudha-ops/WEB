@@ -18,7 +18,7 @@ cards.forEach(card => {
 if (startBtn) {
   startBtn.addEventListener("click", () => {
     if (selectedGame === "hardware") {
-      window.location.href = "Hardware.html";
+      window.location.href = "Hardwere.html";
     } else {
       window.location.href = "Fungsi.html";
     }

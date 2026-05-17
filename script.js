@@ -1,4 +1,4 @@
-let selectedGame = "hardware";
+let selectedGame = "hardwere";
 
 const cards = document.querySelectorAll(".card");
 const startBtn = document.querySelector(".primary");
@@ -17,7 +17,7 @@ cards.forEach(card => {
 // === MULAI GAME ===
 if (startBtn) {
   startBtn.addEventListener("click", () => {
-    if (selectedGame === "hardware") {
+    if (selectedGame === "hardwere") {
       window.location.href = "Hardwere.html";
     } else {
       window.location.href = "Fungsi.html";

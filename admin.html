@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Admin Hardware</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Segoe UI;
+  background:#f4f7fb;
+  padding:30px;
+}
+
+h1{
+  color:#2196f3;
+}
+
+.container{
+  background:white;
+  padding:25px;
+  border-radius:15px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+input{
+  padding:12px;
+  margin:5px;
+  width:220px;
+  border:1px solid #ccc;
+  border-radius:10px;
+}
+
+button{
+  padding:10px 15px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  color:white;
+  font-weight:bold;
+}
+
+.add{
+  background:#4caf50;
+}
+
+.edit{
+  background:#2196f3;
+}
+
+.delete{
+  background:#f44336;
+}
+
+.back{
+  background:#555;
+  margin-top:20px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:25px;
+}
+
+th,td{
+  border:1px solid #ddd;
+  padding:12px;
+  text-align:center;
+}
+
+img{
+  width:70px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Kelola Hardware</h1>
+
+<input type="text" id="name" placeholder="Nama Hardware">
+<input type="text" id="img" placeholder="Nama File Gambar">
+
+<button class="add" onclick="addHardware()">
+Tambah
+</button>
+
+<table>
+
+<thead>
+<tr>
+<th>Gambar</th>
+<th>Nama</th>
+<th>Aksi</th>
+</tr>
+</thead>
+
+<tbody id="tableData"></tbody>
+
+</table>
+
+<button class="back" onclick="goGame()">
+Kembali ke Game
+</button>
+
+</div>
+
+<script>
+
+let hardwareData =
+JSON.parse(localStorage.getItem("hardwareData")) || [
+
+  {name:"Keyboard", img:"Keyboard.png"},
+  {name:"Monitor", img:"Monitor.png"},
+  {name:"Mouse", img:"Mouse.png"}
+
+];
+
+function saveData() {
+  localStorage.setItem(
+    "hardwareData",
+    JSON.stringify(hardwareData)
+  );
+}
+
+function renderTable() {
+
+  const table =
+  document.getElementById("tableData");
+
+  table.innerHTML = "";
+
+  hardwareData.forEach((item,index) => {
+
+    table.innerHTML += `
+      <tr>
+
+        <td>
+          <img src="${item.img}">
+        </td>
+
+        <td>
+          ${item.name}
+        </td>
+
+        <td>
+
+          <button
+          class="edit"
+          onclick="editData(${index})">
+
+          Edit
+
+          </button>
+
+          <button
+          class="delete"
+          onclick="deleteData(${index})">
+
+          Hapus
+
+          </button>
+
+        </td>
+
+      </tr>
+    `;
+  });
+}
+
+function addHardware() {
+
+  const name =
+  document.getElementById("name").value;
+
+  const img =
+  document.getElementById("img").value;
+
+  if(name === "" || img === "") {
+
+    alert("Isi semua data!");
+
+    return;
+  }
+
+  hardwareData.push({
+    name,
+    img
+  });
+
+  saveData();
+
+  renderTable();
+
+  document.getElementById("name").value = "";
+  document.getElementById("img").value = "";
+}
+
+function deleteData(index) {
+
+  if(confirm("Hapus data ini?")) {
+
+    hardwareData.splice(index,1);
+
+    saveData();
+
+    renderTable();
+  }
+}
+
+function editData(index) {
+
+  const newName =
+  prompt(
+    "Edit Nama",
+    hardwareData[index].name
+  );
+
+  const newImg =
+  prompt(
+    "Edit Gambar",
+    hardwareData[index].img
+  );
+
+  if(newName && newImg){
+
+    hardwareData[index] = {
+      name:newName,
+      img:newImg
+    };
+
+    saveData();
+
+    renderTable();
+  }
+}
+
+function goGame() {
+  window.location.href = "Hardware.html";
+}
+
+renderTable();
+
+</script>
+
+</body>
+</html>
